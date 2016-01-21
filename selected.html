@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+     <link rel="stylesheet" type="text/css" href="css/main.css">
+    <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+</head>
+<script>
+    jQuery.fn.extend({
+        divselect: function (opt) {
+            var defaults = {
+                width:80,
+                height:null
+            };
+            $.extend(true,defaults, opt);
+            var inputselect = $(this).find("input[type='hidden']");
+            var $this = $(this);
+            $this.find("span").click(function(){
+                var ul = $(this).next("ul");
+                if($(this).hasClass("seldown")){
+                    $(this).removeClass("seldown").addClass("selup");
+                }else{
+                    $(this).removeClass("selup").addClass("seldown");
+                }
+                if(ul.css("display")=="none"){
+                    ul.slideDown("fast");
+                }else{
+                    ul.slideUp("fast");
+                }
+            });
+            $this.find("ul li").click(function(){
+                var txt = $(this).text();
+                $(this).parents(".divsel").find("span").html(txt);
+                var value = $(this).find("a").attr("selectid");
+                inputselect.val(value);
+                $this.find("ul").hide();
+            });
+
+            $(document).click(function(e){
+                if(e&&e.target.tagName!="SPAN"){
+                    $this.find("span").removeClass("selup").addClass("seldown");
+                    $this.find("ul").slideUp("fast");
+                }
+            });
+        }
+    });
+</script>
+<script type="text/javascript">
+    $(function(){
+        $("#divselect").divselect();
+    });
+</script>
+<body>
+<div id="divselect" class="divsel">
+    <input name="" type="hidden" value="" id="inputselect"/>
+    <span class="select seldown">请选择</span>
+    <ul>
+        <li><a href="javascript:;" selectid="1">导航菜单</a></li>
+        <li><a href="javascript:;" selectid="2">下拉select效果</a></li>
+        <li><a href="javascript:;" selectid="3">select模拟</a></li>
+        <li><a href="javascript:;" selectid="4">DIVCSS5特效</a></li>
+        <li><a href="javascript:;" selectid="5">jquery 下拉菜单特效</a></li>
+    </ul>
+</div>
+
+</body>
+</html>
